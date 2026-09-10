@@ -3,6 +3,7 @@ package com.example.centrol_fee.services;
 import org.springframework.stereotype.Service;
 import com.example.centrol_fee.models.User;
 import com.example.centrol_fee.mappers.UserMapper;
+import com.example.centrol_fee.config.AuditLoggable;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,7 +15,7 @@ public class UserService {
          public UserService(UserMapper userMapper) {
                   this.userMapper = userMapper;
          }
-
+         @AuditLoggable(action = "CREATE", entityName = "User", description = "ສ້າງຜູ້ໃຊ້ໃໝ່")
          public User createUser(User user) {
                   if (userMapper.existsByEmail(user.getEmail())) {
                            throw new RuntimeException("Email ນີ້ຖືກນຳໃຊ້ແລ້ວ!");
@@ -33,7 +34,7 @@ public class UserService {
          public Optional<User> getUserById(Long id) {
                   return userMapper.findById(id);
          }
-
+         @AuditLoggable(action = "UPDATE", entityName = "User", description = "ອັບເດດຂໍ້ມູນຜູ້ໃຊ້")
          public User updateUser(Long id, User userDetails) {
                   User user = userMapper.findById(id)
                                     .orElseThrow(() -> new RuntimeException("ບໍ່ພົບຂໍ້ມູນ User ID: " + id));
@@ -56,7 +57,8 @@ public class UserService {
                   userMapper.update(user);
                   return user;
          }
-
+         
+         @AuditLoggable(action = "DELETE", entityName = "User", description = "ລົບຜູ້ໃຊ້")
          public void deleteUser(Long id) {
                   userMapper.deleteById(id);
          }
