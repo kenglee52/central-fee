@@ -3,6 +3,7 @@ package com.example.centrol_fee.services;
 import org.springframework.stereotype.Service;
 import com.example.centrol_fee.models.Fee;
 import com.example.centrol_fee.mappers.FeeMapper;
+import com.example.centrol_fee.config.AuditLoggable; 
 
 import java.util.List;
 import java.util.Optional;
@@ -12,7 +13,7 @@ public class FeeService {
     public FeeService(FeeMapper feeMapper) {
         this.feeMapper = feeMapper;
     }
-
+    @AuditLoggable(action = "CREATE", entityName = "Fee", description = "ສ້າງລາຍການຄ່າທຳນຽມໃໝ່")
     public Fee createFee(Fee fee) {
     
         if (feeMapper.existsByServiceCode(fee.getServiceCode())) {
@@ -29,7 +30,7 @@ public class FeeService {
     public Optional<Fee> getFeeById(Long id) {
         return feeMapper.findByIdOptional(id);
     }
-
+    @AuditLoggable(action = "UPDATE", entityName = "Fee", description = "ອັບເດດຂໍ້ມູນຄ່າທຳນຽມ")
     public Fee updateFee(Long id, Fee feeDetails) {
         Fee fee = feeMapper.findByIdOptional(id)
                 .orElseThrow(() -> new RuntimeException("ບໍ່ພົບຂໍ້ມູນ Fee ID: " + id));
