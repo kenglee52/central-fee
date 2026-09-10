@@ -35,12 +35,6 @@ public class AuditLog {
     @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
-    @Column(name = "old_value", columnDefinition = "TEXT")
-    private String oldValue;
-
-    @Column(name = "new_value", columnDefinition = "TEXT")
-    private String newValue;
-
     @Column(name = "ip_address", length = 45)
     private String ipAddress;
 

@@ -65,7 +65,8 @@ public class AuditAspect {
         String ipAddress = getClientIp();
 
         auditLogService.log(actorId, actorName, action, auditLoggable.entityName(),
-                entityId, description, null, null, ipAddress);
+                entityId, description, ipAddress);
+        
     }
 
     private String extractEntityId(JoinPoint joinPoint, Object result) {

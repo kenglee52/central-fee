@@ -15,7 +15,7 @@ public class AuditLogService {
     }
 
     public void log(Long userId, String username, String action, String entityName,
-                     String entityId, String description, String oldValue, String newValue, String ipAddress) {
+                     String entityId, String description, String ipAddress) {
         AuditLog auditLog = new AuditLog();
         auditLog.setUserId(userId);
         auditLog.setUsername(username);
@@ -23,8 +23,6 @@ public class AuditLogService {
         auditLog.setEntityName(entityName);
         auditLog.setEntityId(entityId);
         auditLog.setDescription(description);
-        auditLog.setOldValue(oldValue);
-        auditLog.setNewValue(newValue);
         auditLog.setIpAddress(ipAddress);
         auditLogMapper.insert(auditLog);
     }
