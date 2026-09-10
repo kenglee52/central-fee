@@ -1,5 +1,6 @@
 package com.example.centrol_fee.services;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.example.centrol_fee.models.User;
 import com.example.centrol_fee.mappers.UserMapper;
@@ -10,9 +11,11 @@ import java.util.Optional;
 public class UserService {
 
          private final UserMapper userMapper;
+         private final PasswordEncoder hashPassword;
 
-         public UserService(UserMapper userMapper) {
+         public UserService(UserMapper userMapper, PasswordEncoder hashPassword) {
                   this.userMapper = userMapper;
+                  this.hashPassword = hashPassword;
          }
 
          public User createUser(User user) {
@@ -22,6 +25,8 @@ public class UserService {
                   if (userMapper.existsByTel(user.getTel())) {
                            throw new RuntimeException("ເບີໂທລະສັບ ນີ້ຖືກນຳໃຊ້ແລ້ວ!");
                   }
+                  String hashedPassword = hashPassword.encode(user.getPassword());
+                  user.setPassword(hashedPassword);
                   userMapper.insert(user);
                   return user;
          }

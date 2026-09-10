@@ -1,4 +1,5 @@
 package com.example.centrol_fee.mappers;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -36,4 +37,7 @@ public interface UserMapper {
 
          @Delete("DELETE FROM users WHERE id = #{id}")
          void deleteById(Long id);
+
+         @Select("SELECT id, name, lastname, gender, tel, email, password, role FROM users WHERE email = #{email}")
+         Optional<User> findByEmail(String email);
 }
